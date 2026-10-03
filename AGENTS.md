@@ -16,8 +16,7 @@ programar.
 - Diseño limpio y responsive; cualquier pantalla nueva debe verse bien en el móvil.
 
 ## Datos 
-- localStorage, clave `diario-estudio-sesiones`: array de `{ date: "AAAA-MM-DD", topic, 
-minutes }`. 
+- localStorage, clave `diarioDeEstudio`: array de `{ fecha: "AAAA-MM-DD", tema, minutos }`. 
 - Si cambias la forma de los datos, mantén compatibilidad con lo ya guardado o el usuario 
 perderá sus sesiones. 
 
@@ -27,6 +26,8 @@ Date("AAAA-MM-DD")`: se interpretan en UTC y desplazan el día.
 - Racha = días consecutivos con al menos 1 sesión que terminan hoy. Si hoy no hay sesión 
 pero ayer sí, la racha sigue viva y se cuenta desde ayer. 
 - Varias sesiones el mismo día cuentan como un solo día. Las fechas futuras no suman.
+- Mejor racha = la racha más larga conseguida nunca. Se calcula sobre los días distintos, 
+sin fechas futuras, y puede coincidir con la racha actual si esta es la mayor. 
 
 ## Forma de trabajar 
 - Haz solo lo que se pide: no añadas funcionalidades por tu cuenta. 
@@ -50,6 +51,7 @@ dejarlo en la memoria.
 -🚫 Nunca: añadir dependencias, frameworks o un paso de build. 
 
 ## Verificación 
-- No hay tests ni lint. Probar abriendo `index.html` en el navegador. 
+- No hay tests automáticos. Hay config de Trunk (`.trunk/trunk.yaml`) pero el CLI no está 
+instalado, así que en la práctica no hay lint. Probar abriendo `index.html` en el navegador. 
 - Para empezar de cero: DevTools → Application → Local Storage → borrar la clave 
-`diario-estudio-sesiones`.
+`diarioDeEstudio`.

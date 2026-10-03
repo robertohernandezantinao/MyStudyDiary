@@ -13,11 +13,19 @@
       <p class="subtitulo">Registra tus sesiones y no rompas la racha.</p>
     </header>
 
-    <!-- Racha actual -->
+    <!-- Racha actual y mejor racha -->
     <section class="racha" aria-live="polite">
-      <p class="racha-etiqueta">Racha actual</p>
-      <p class="racha-numero">🔥 <span id="racha">0</span></p>
-      <p class="racha-texto" id="racha-texto">días</p>
+      <div class="racha-bloque">
+        <p class="racha-etiqueta">Racha actual</p>
+        <p class="racha-numero">🔥 <span id="racha">0</span></p>
+        <p class="racha-texto" id="racha-texto">días</p>
+      </div>
+
+      <div class="racha-bloque racha-bloque--mejor">
+        <p class="racha-etiqueta">Mejor racha</p>
+        <p class="racha-numero">🏆 <span id="mejor-racha">0</span></p>
+        <p class="racha-texto" id="mejor-racha-texto">días</p>
+      </div>
     </section>
 
     <!-- Formulario para añadir una sesión -->

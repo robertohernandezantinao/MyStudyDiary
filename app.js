@@ -79,6 +79,39 @@ function calcularRacha() {
   return racha;
 }
 
+// Dice si "siguiente" es el día justo después de "anterior".
+// Usamos componentes locales (no new Date("AAAA-MM-DD")) para no desviarnos a UTC.
+function esDiaSiguiente(anterior, siguiente) {
+  const [año, mes, dia] = anterior.split("-").map(Number);
+  const cursor = new Date(año, mes - 1, dia);
+  cursor.setDate(cursor.getDate() + 1);
+  return aClaveFecha(cursor) === siguiente;
+}
+
+// Cuenta la racha más larga conseguida nunca.
+// Puede coincidir con la racha actual si esta es la mayor.
+function calcularMejorRacha() {
+  const hoy = claveDeHoy();
+
+  // Días distintos con sesión, sin fechas futuras (las futuras no suman).
+  const dias = [...new Set(sesiones.map((sesion) => sesion.fecha))]
+    .filter((fecha) => fecha <= hoy)
+    .sort(); // "AAAA-MM-DD" ordenado alfabéticamente ya queda en orden cronológico.
+
+  let mejor = 0;
+  let tramo = 0;
+  let anterior = null;
+
+  for (const dia of dias) {
+    // Si es el día siguiente al anterior, el tramo sigue; si no, empieza otro.
+    tramo = anterior !== null && esDiaSiguiente(anterior, dia) ? tramo + 1 : 1;
+    if (tramo > mejor) mejor = tramo;
+    anterior = dia;
+  }
+
+  return mejor;
+}
+
 // -------------------------------------------------------------------
 // Pintar la interfaz
 // -------------------------------------------------------------------
@@ -87,6 +120,10 @@ function pintarRacha() {
   const racha = calcularRacha();
   document.getElementById("racha").textContent = racha;
   document.getElementById("racha-texto").textContent = racha === 1 ? "día" : "días";
+
+  const mejor = calcularMejorRacha();
+  document.getElementById("mejor-racha").textContent = mejor;
+  document.getElementById("mejor-racha-texto").textContent = mejor === 1 ? "día" : "días";
 }
 
 // Muestra una fecha "YYYY-MM-DD" como "30 de septiembre de 2026".

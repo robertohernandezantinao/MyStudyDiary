@@ -1,48 +1,24 @@
-## Qué es esto
-
-"Diario de Estudio": una web estática y sin dependencias para registrar sesiones
-de estudio y seguir una racha de días. **No hay build, ni gestor de paquetes, ni
-servidor, ni tests.**
-
-## Restricciones duras (no romper )
-
-- Exactamente tres archivos: `index.html`, `styles.css` y `app.js`. No añadas un
-  cuarto archivo, ni `package.json`, ni un bundler, ni librerías, frameworks o
-  scripts por CDN.
-- Todo debe seguir funcionando al abrir `index.html` con doble clic (`file://`).
-  Nada de `fetch`, ni `import` de módulos, ni rutas que dependan de un servidor.
-- Todos los textos de la interfaz están en español.
-
-## Ejecutar y verificar cambios
-
-- Abre `C:\MyStudyDiary\index.html` en el navegador (o `Start-Process index.html`).
-  No hay nada que instalar ni compilar.
-- No existe ningún test automático. Para probar la lógica pura de `app.js`
-  (`calcularRacha`, `formatearFecha`, ...) sin navegador, ejecútala en Node con un
-  stub mínimo de `document` y `localStorage` usando el módulo `vm`. Ojo: el código
-  de DOM se ejecuta al cargar, así que los stubs deben existir antes de
-  `runInContext`.
-
-## Modelo de datos y trampas
-
-- Las sesiones se guardan en `localStorage` bajo la clave `diarioDeEstudio` como
-  un array de `{ fecha, tema, minutos }`, donde `fecha` es una fecha local en
-  texto `"YYYY-MM-DD"`.
-- **Las fechas deben ser siempre locales, nunca UTC.** Construye y descompón las
-  fechas con `getFullYear` / `getMonth` / `getDate` (`aClaveFecha`), y parsea las
-  claves con `new Date(año, mes - 1, dia)`. Nunca uses `toISOString()` ni
-  `new Date("YYYY-MM-DD")`: ambos desplazan el día según la zona horaria.
-- Regla de la racha (`calcularRacha`): cuenta los días consecutivos con al menos
-  una sesión que terminan hoy; si hoy no hay ninguna pero ayer sí, la racha sigue
-  viva y se cuenta desde ayer. Lista vacía => 0.
-- Las sesiones se guardan con la más nueva primero (`unshift`) y se muestran con
-  un `sort` estable por `fecha` descendente.
-
-## Lint
-
-- Trunk está configurado en `.trunk/trunk.yaml` (prettier + markdownlint,
-  `node@22.16.0`). El CLI de Trunk **no** está instalado en el PATH y no hay git
-  hooks instalados, así que `trunk check` / `trunk fmt` solo funcionan si se
-  instala.
-- Se aplican los valores por defecto de prettier (indentación de 2 espacios,
-  comillas dobles, punto y coma). Sigue el estilo de los archivos existentes.
+# AGENTS.md — Diario de Estudio 
+Web estática para registrar sesiones de estudio y motivarse viendo la racha de días 
+seguidos. Proyecto didáctico: el código debe poder entenderlo alguien que empieza a 
+programar. 
+## Stack y estructura - HTML, CSS y JavaScript puros: sin frameworks, librerías, npm, bundler ni build. - `index.html` (estructura), `styles.css` (estilos), `app.js` (lógica y datos). - Debe funcionar abriendo `index.html` con doble clic (`file://`): nada de módulos ES 
+(`type="module"`), `fetch` a archivos locales ni nada que requiera servidor. 
+## Convenciones - Textos de la interfaz en español. - Código simple, nombres descriptivos y comentarios solo donde aporten. - Diseño limpio y responsive; cualquier pantalla nueva debe verse bien en el móvil. 
+## Datos - localStorage, clave `diario-estudio-sesiones`: array de `{ date: "AAAA-MM-DD", topic, 
+minutes }`. - Si cambias la forma de los datos, mantén compatibilidad con lo ya guardado o el usuario 
+perderá sus sesiones. 
+## Límites 
+## Fechas y racha (fácil equivocarse) - Trabaja siempre con la fecha local del usuario. Nunca uses `toISOString()` ni `new 
+Date("AAAA-MM-DD")`: se interpretan en UTC y desplazan el día. - Racha = días consecutivos con al menos 1 sesión que terminan hoy. Si hoy no hay sesión 
+pero ayer sí, la racha sigue viva y se cuenta desde ayer. - Varias sesiones el mismo día cuentan como un solo día. Las fechas futuras no suman. 
+## Forma de trabajar - Haz solo lo que se pide: no añadas funcionalidades por tu cuenta. - Cambios pequeños y enfocados; no reescribas lo que ya funciona. - Al terminar, resume qué has cambiado y cualquier decisión que deba revisar. - 
+✅
+ Siempre: respetar las reglas de fechas y racha, mantener los textos en español. - 
+⚠
+ Pregunta antes: crear archivos nuevos, cambiar el formato de los datos guardados. - 
+ 
+ 
+ Nunca: añadir dependencias, frameworks o un paso de build. 
+## Verificación - No hay tests ni lint. Probar abriendo `index.html` en el navegador. - Para empezar de cero: DevTools → Application → Local Storage → borrar la clave 
+`diario-estudio-sesiones`. 

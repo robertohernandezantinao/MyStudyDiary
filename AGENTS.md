@@ -4,7 +4,7 @@
 de estudio y seguir una racha de días. **No hay build, ni gestor de paquetes, ni
 servidor, ni tests.**
 
-## Restricciones duras (no romper)
+## Restricciones duras (no romper )
 
 - Exactamente tres archivos: `index.html`, `styles.css` y `app.js`. No añadas un
   cuarto archivo, ni `package.json`, ni un bundler, ni librerías, frameworks o

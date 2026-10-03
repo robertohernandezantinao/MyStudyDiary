@@ -45,10 +45,10 @@ dejarlo en la memoria.
 
 ## Límites
 ✅ Siempre: respetar las reglas de fechas y racha, mantener los textos en español. - 
-⚠ Pregunta antes: crear archivos nuevos, cambiar el formato de los datos guardados. - 
-�
-� Nunca: añadir dependencias, frameworks o un paso de build. 
-  Pregunta antes: crear archivos nuevos, cambiar el formato de los datos guardados.
+⚠️ Pregunta antes: crear archivos nuevos, cambiar el formato de los datos guardados. - 
+🚫 Nunca: añadir dependencias, frameworks o un paso de build. 
 
-## Verificación - No hay tests ni lint. Probar abriendo `index.html` en el navegador. - Para empezar de cero: DevTools → Application → Local Storage → borrar la clave 
+## Verificación 
+- No hay tests ni lint. Probar abriendo `index.html` en el navegador. 
+- Para empezar de cero: DevTools → Application → Local Storage → borrar la clave 
 `diario-estudio-sesiones`.

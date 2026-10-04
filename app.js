@@ -113,6 +113,69 @@ function calcularMejorRacha() {
 }
 
 // -------------------------------------------------------------------
+// Minutos de esta semana
+// -------------------------------------------------------------------
+
+// Lunes de la semana actual (la semana empieza en lunes).
+function claveDeInicioSemana() {
+  const hoy = new Date();
+  // getDay(): domingo = 0, lunes = 1... Pasamos a lunes = 0, domingo = 6.
+  const diasDesdeLunes = (hoy.getDay() + 6) % 7;
+  hoy.setDate(hoy.getDate() - diasDesdeLunes);
+  return aClaveFecha(hoy);
+}
+
+// Suma los minutos de las sesiones desde el lunes hasta hoy.
+// Las fechas futuras no suman, así que paramos en hoy.
+function calcularMinutosSemana() {
+  const inicio = claveDeInicioSemana();
+  const fin = claveDeHoy();
+
+  let total = 0;
+  for (const sesion of sesiones) {
+    if (sesion.fecha >= inicio && sesion.fecha <= fin) {
+      total += Number(sesion.minutos) || 0;
+    }
+  }
+  return total;
+}
+
+// Convierte minutos en un texto legible: "45 min", "150 min (2 h 30 min)".
+function formatearMinutos(minutos) {
+  if (minutos < 60) return `${minutos} min`;
+
+  const horas = Math.floor(minutos / 60);
+  const resto = minutos % 60;
+  const parteHoras = resto === 0 ? `${horas} h` : `${horas} h ${resto} min`;
+  return `${minutos} min (${parteHoras})`;
+}
+
+// -------------------------------------------------------------------
+// Días de este mes
+// -------------------------------------------------------------------
+
+// Primer día del mes actual (siempre en fecha local).
+function claveDeInicioMes() {
+  const hoy = new Date();
+  return aClaveFecha(new Date(hoy.getFullYear(), hoy.getMonth(), 1));
+}
+
+// Cuenta los días distintos con al menos una sesión entre el día 1 y hoy.
+// Usamos un Set para que varias sesiones el mismo día cuenten como uno.
+function calcularDiasEstudiadosMes() {
+  const inicio = claveDeInicioMes();
+  const fin = claveDeHoy();
+
+  const dias = new Set();
+  for (const sesion of sesiones) {
+    if (sesion.fecha >= inicio && sesion.fecha <= fin) {
+      dias.add(sesion.fecha);
+    }
+  }
+  return dias.size;
+}
+
+// -------------------------------------------------------------------
 // Pintar la interfaz
 // -------------------------------------------------------------------
 
@@ -124,6 +187,16 @@ function pintarRacha() {
   const mejor = calcularMejorRacha();
   document.getElementById("mejor-racha").textContent = mejor;
   document.getElementById("mejor-racha-texto").textContent = mejor === 1 ? "día" : "días";
+}
+
+function pintarSemana() {
+  const total = calcularMinutosSemana();
+  document.getElementById("minutos-semana").textContent = formatearMinutos(total);
+}
+
+function pintarMes() {
+  const dias = calcularDiasEstudiadosMes();
+  document.getElementById("dias-mes").textContent = dias === 1 ? "1 día" : `${dias} días`;
 }
 
 // Muestra una fecha "YYYY-MM-DD" como "30 de septiembre de 2026".
@@ -165,6 +238,8 @@ function pintarLista() {
 
 function pintarTodo() {
   pintarRacha();
+  pintarSemana();
+  pintarMes();
   pintarLista();
 }
 

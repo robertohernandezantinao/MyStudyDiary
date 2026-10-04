@@ -86,6 +86,41 @@ body {
   opacity: 0.9;
 }
 
+/* ---------- Resumen (semana y mes) ---------- */
+
+.resumen {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.resumen-fila {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.resumen-fila + .resumen-fila {
+  border-top: 1px solid #eef0f3;
+  padding-top: 10px;
+}
+
+.resumen-etiqueta {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6b7280;
+}
+
+.resumen-valor {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #f4511e;
+  text-align: right;
+}
+
 /* ---------- Tarjetas ---------- */
 
 .tarjeta {

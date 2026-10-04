@@ -28,6 +28,10 @@ pero ayer sí, la racha sigue viva y se cuenta desde ayer.
 - Varias sesiones el mismo día cuentan como un solo día. Las fechas futuras no suman.
 - Mejor racha = la racha más larga conseguida nunca. Se calcula sobre los días distintos, 
 sin fechas futuras, y puede coincidir con la racha actual si esta es la mayor. 
+- Minutos de la semana = suma de `minutos` de las sesiones desde el lunes de la semana 
+actual hasta hoy, con fecha local; las fechas futuras no suman. 
+- Días del mes = días distintos con al menos una sesión desde el día 1 del mes hasta hoy, 
+con fecha local; las fechas futuras no suman. 
 
 ## Forma de trabajar 
 - Haz solo lo que se pide: no añadas funcionalidades por tu cuenta. 
